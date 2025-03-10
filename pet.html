@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden { display: none; }
+        /* Slideshow styles */
+        .slideshow {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Each slide */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-color: gray;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slideshow-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: white;
+        }
+
+        .slide-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 28px;
+            color: #333;
+        }
+
+        .slide-arrow:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slide-arrow-left {
+            left: 20px;
+        }
+
+        .slide-arrow-right {
+            right: 20px;
+        }
+
+        .slide-arrow-left::before {
+            content: '\276E';
+        }
+
+        .slide-arrow-right::before {
+            content: '\276F';
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-orange-500 text-white p-5 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">🐾 Pet Adoption</h1>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#" onclick="showSection('home')" class="hover:underline">Home</a></li>
+                    <li><a href="#" onclick="showSection('available-pets')" class="hover:underline">Available Pets</a></li>
+                    <li><a href="#" onclick="showSection('adoption-process')" class="hover:underline">Adoption Process</a></li>
+                    <li><a href="#" onclick="showSection('contact-us')" class="hover:underline">Contact Us</a></li>
+                    <li><a href="#" onclick="showSection('login')" class="hover:underline">Login / Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="relative min-h-screen text-center">
+        <div class="slideshow">
+            <div class="slide active" style="background-image: url('lec (1).jpg');"></div>
+            <div class="slide" style="background-image: url('lec (2).jpg');"></div>
+            <div class="slide" style="background-image: url('lec (3).jpg');"></div>
+            <div class="slide" style="background-image: url('lec (4).jpg');"></div>
+            <div class="slide" style="background-image: url('lec (5).jpg');"></div>
+            <div class="slide" style="background-image: url('lec (6).jpg');"></div>
+
+            <div class="slideshow-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+                <span class="dot" data-index="4"></span>
+                <span class="dot" data-index="5"></span>
+            </div>
+
+            <div class="slide-arrow slide-arrow-left" onclick="prevSlide()"></div>
+            <div class="slide-arrow slide-arrow-right" onclick="nextSlide()"></div>
+        </div>
+
+        <div class="absolute inset-0 flex flex-col justify-center items-center text-center">
+            <h2 class="text-white text-3xl font-bold">Find Your Furry Friend</h2>
+            <p class="text-white text-lg mt-2">Browse our available pets and find your perfect companion.</p>
+            <button class="bg-orange-500 text-white px-6 py-3 rounded-full mt-4 hover:bg-orange-600" onclick="showSection('available-pets')">See Our Pets</button>
+        </div>
+    </section>
+
+    <section id="adoption-process" class="hidden py-16 px-4 bg-white">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-orange-600 mb-6">Adoption Process</h2>
+            <p class="text-center text-gray-700 mb-8">Follow these simple steps to adopt your new furry friend!</p>
+            
+            <div class="space-y-8">
+                <div class="flex items-start">
+                    <span class="text-orange-500 text-3xl font-bold mr-4">1.</span>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800">Find a Pet</h3>
+                        <p class="text-gray-600">Browse our list of available pets and choose the one that best matches your lifestyle.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <span class="text-orange-500 text-3xl font-bold mr-4">2.</span>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800">Submit an Application</h3>
+                        <p class="text-gray-600">Fill out our adoption form with your details and preferences to start the adoption process.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <span class="text-orange-500 text-3xl font-bold mr-4">3.</span>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800">Meet the Pet</h3>
+                        <p class="text-gray-600">Schedule a meeting with the pet to ensure a good match between you and your future companion.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <span class="text-orange-500 text-3xl font-bold mr-4">4.</span>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800">Complete the Adoption</h3>
+                        <p class="text-gray-600">Once approved, finalize the paperwork and bring your new pet home!</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="text-center mt-10">
+                <button class="bg-orange-500 text-white px-6 py-3 rounded-full hover:bg-orange-600" onclick="showSection('available-pets')">
+                    Start Your Adoption Journey
+                </button>
+                
+            </div>
+    </section>
+    
+    
+    <section id="available-pets" class="hidden p-10">
+        <h2 class="text-3xl font-bold mb-8 text-center">Available Pets</h2>
+        <p class="text-center mb-8">Browse through a list of pets available for adoption.</p>
+    
+        <div class="text-center mb-8">
+            <button class="bg-orange-500 text-white px-6 py-3 rounded-full hover:bg-orange-600" onclick="showSection('adoption-process')">
+                Adoption Process
+            </button>
+        </div>
+    
+        <div class="flex justify-center space-x-8">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                <h3 class="text-2xl font-bold text-center mb-4">Adopt a Dog</h3>
+                <div style="width: 100%; aspect-ratio: 1080 / 1350;">
+                    <img src="lec (7).jpg" alt="Adopt a Dog" class="w-full h-full object-contain rounded-md mb-4">
+                </div>
+                <p class="text-lg text-center mb-6">Find your loyal companion. Adopt a dog today and bring joy to your life!</p>
+                <div class="text-center">
+                    <button class="bg-orange-500 text-white px-6 py-3 rounded-full hover:bg-orange-600">Adopt Now</button>
+                </div>
+            </div>
+    
+            <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                <h3 class="text-2xl font-bold text-center mb-4">Adopt a Cat</h3>
+                <div style="width: 100%; aspect-ratio: 1080 / 1350;">
+                    <img src="lec (8).jpg" alt="Adopt a Cat" class="w-full h-full object-contain rounded-md mb-4">
+                </div>
+                <p class="text-lg text-center mb-6">Looking for a feline friend? Adopt a cat and give them a forever home.</p>
+                <div class="text-center">
+                    <button class="bg-orange-500 text-white px-6 py-3 rounded-full hover:bg-orange-600">Adopt Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact-us" class="hidden py-16 px-4 bg-gradient-to-b from-orange-50 to-white">
+        <div class="max-w-2xl mx-auto">
+          <h2 class="text-3xl font-bold text-center text-orange-600 mb-6">Get in Touch!</h2>
+          <p class="text-center text-gray-700 mb-8">We'd love to hear from you, whether you have a question, suggestion, or want to learn more about our adoption process.</p>
+          
+          <!-- Contact Form -->
+          <div class="bg-white p-8 rounded-xl shadow-lg">
+            <form action="/submit-form" method="POST">
+              <div class="mb-5">
+                <label for="name" class="block text-gray-700 text-sm font-semibold mb-2">Full Name</label>
+                <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-300 focus:border-orange-500 focus:outline-none transition-all" required>
+              </div>
+              
+              <div class="mb-5">
+                <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email Address</label>
+                <input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-300 focus:border-orange-500 focus:outline-none transition-all" required>
+              </div>
+              
+              <div class="mb-5">
+                <label for="phone" class="block text-gray-700 text-sm font-semibold mb-2">Phone Number (Optional)</label>
+                <input type="tel" id="phone" name="phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-300 focus:border-orange-500 focus:outline-none transition-all">
+              </div>
+              
+              <div class="mb-5">
+                <label for="message" class="block text-gray-700 text-sm font-semibold mb-2">Message</label>
+                <textarea id="message" name="message" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-300 focus:border-orange-500 focus:outline-none transition-all" required></textarea>
+              </div>
+              
+              <button type="submit" class="w-full bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 transition-all transform hover:scale-105">
+                Submit Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+      
+    <!-- Login Section -->
+<section id="login" class="hidden py-16 px-4 bg-gradient-to-b from-orange-50 to-white">
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="bg-orange-500 py-4">
+            <h2 class="text-3xl font-bold text-center text-white">Welcome Back</h2>
+        </div>
+        <div class="p-8">
+            <form action="login" method="POST">
+                <div class="mb-6">
+                    <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <input type="email" id="email" name="email" class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-300 focus:border-orange-500 focus:outline-none transition-all" placeholder="your@email.com" required />
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 text-sm font-semibold mb-2">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <input type="password" id="password" name="password" class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-300 focus:border-orange-500 focus:outline-none transition-all" placeholder="••••••••" required />
+                    </div>
+                </div>
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                    </div>
+                    <a href="#" class="text-sm text-orange-500 hover:text-orange-700">Forgot password?</a>
+                </div>
+                <button type="submit" class="w-full bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 transition-all transform hover:scale-105">
+                    Sign In
+                </button>
+            </form>
+            <div class="text-center mt-6">
+                <p class="text-gray-600">Don't have an account? <a href="#" onclick="showSection('signup')" class="text-orange-500 font-semibold hover:underline">Sign Up</a></p>
+            </div>
+            <div class="relative mt-8">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                </div>
+            </div>
+            <div class="mt-6 grid grid-cols-2 gap-3">
+                <button type="button" class="w-full py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.283 10.356h-8.327v3.451h4.792c-.446 2.193-2.313 3.453-4.792 3.453a5.27 5.27 0 0 1-5.279-5.28 5.27 5.27 0 0 1 5.279-5.279c1.259 0 2.397.447 3.29 1.178l2.6-2.599c-1.584-1.381-3.615-2.233-5.89-2.233a8.908 8.908 0 0 0-8.934 8.934 8.907 8.907 0 0 0 8.934 8.934c4.467 0 8.529-3.249 8.529-8.934 0-.528-.081-1.097-.202-1.625z"/>
+                    </svg>
+                    Google
+                </button>
+                <button type="button" class="w-full py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
+                    </svg>
+                    Facebook
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Signup Section -->
+<section id="signup" class="hidden py-16 px-4 bg-gradient-to-b from-orange-50 to-white">
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="bg-orange-500 py-4">
+            <h2 class="text-3xl font-bold text-center text-white">Create Account</h2>
+        </div>
+        <div class="p-8">
+            <form action="signup" method="POST">
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label for="first-name" class="block text-gray-700 text-sm font-semibold mb-2">First Name</label>
+                        <input type="text" id="first-name" name="first-name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-300 focus:border-orange-500 focus:outline-none transition-all" required />
+                    </div>
+                    <div>
+                        <label for="last-name" class="block text-gray-700 text-sm font-semibold mb-2">Last Name</label>
+                        <input type="text" id="last-name" name="last-name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-300 focus:border-orange-500 focus:outline-none transition-all" required />
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="signup-email" class="block text-gray-700 text-sm font-semibold mb-2">Email Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <input type="email" id="signup-email" name="email" class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-300 focus:border-orange-500 focus:outline-none transition-all" placeholder="your@email.com" required />
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="signup-password" class="block text-gray-700 text-sm font-semibold mb-2">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <input type="password" id="signup-password" name="password" class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-300 focus:border-orange-500 focus:outline-none transition-all" placeholder="••••••••" required />
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="confirm-password" class="block text-gray-700 text-sm font-semibold mb-2">Confirm Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <input type="password" id="confirm-password" name="confirm-password" class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-300 focus:border-orange-500 focus:outline-none transition-all" placeholder="••••••••" required />
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <div class="flex items-start">
+                        <input id="terms" name="terms" type="checkbox" class="h-4 w-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500 mt-1" required>
+                        <label for="terms" class="ml-2 block text-sm text-gray-700">
+                            I agree to the <a href="#" class="text-orange-500 hover:underline">Terms of Service</a> and <a href="#" class="text-orange-500 hover:underline">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 transition-all transform hover:scale-105">
+                    Create Account
+                </button>
+            </form>
+            <div class="text-center mt-6">
+                <p class="text-gray-600">Already have an account? <a href="#" onclick="showSection('login')" class="text-orange-500 font-semibold hover:underline">Login</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        let slideInterval;
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+                dots[index].classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide === 0) ? slides.length - 1 : currentSlide - 1;
+            updateSlides();
+            resetInterval(); 
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide === slides.length - 1) ? 0 : currentSlide + 1;
+            updateSlides();
+            resetInterval(); 
+        }
+
+        function autoSlide() {
+            slideInterval = setInterval(nextSlide, 5000); 
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval); 
+            autoSlide(); 
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+            resetInterval(); 
+        }
+
+        document.querySelector('.slideshow').addEventListener('mouseleave', autoSlide);
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlides();
+                resetInterval(); 
+            });
+        });
+
+        autoSlide(); 
+        updateSlides();
+    </script>
+
+</body>
+</html>
