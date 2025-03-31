@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    h1 { text-align: center; }
+    form { max-width: 300px; margin: 0 auto; }
+    label { display: block; margin: 10px 0 5px; }
+    input { width: 100%; padding: 8px; }
+    button { display: block; width: 100%; margin-top: 20px; padding: 10px; background-color: green; color: white; border: none; cursor: pointer; }
+    .alert { color: red; text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>Admin Login</h1>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <p class="alert">{{ msg }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <form method="POST" action="{{ url_for('admin') }}">
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" required>
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required>
+
+    <button type="submit">Login</button>
+  </form>
+</body>
+</html>
